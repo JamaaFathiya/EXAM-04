@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#define fatal "error: fatal\n" // if any sys call failed return this error and aexit the program.
+#define fatal "error: fatal\n" // if any sys call except (execve and chdir) failed return this error and aexit the program.
 #define cd_arg "error: cd: bad arguments\n" // for cd arguments
 
 int erno(char *s){
@@ -37,7 +37,7 @@ int main(int ac, char **av, char **env){
         if (strcmp(av[0], "cd") == 0){
             if (i != 2) // if the number of arguments ( cd directory)  is not 2 return an error
                  erno(cd_arg);
-            else if (chdir(av[1]) != 0)
+            else if (chdir(av[1]) != 0) //if chdir failed print an error.
             {
                 erno("error: cd: cannot change directory to ");
                 erno(av[1]);
